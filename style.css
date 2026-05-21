@@ -38,6 +38,7 @@ html, body { height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; b
 .cover-meta div { display: flex; flex-direction: column; gap: 2px; }
 .cover-meta strong { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
 .cover-meta span { font-size: 0.9rem; font-weight: 500; }
+.cover-decor { width: 400px; margin-top: 32px; opacity: 0.6; }
 
 /* Slide Header */
 .slide-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
@@ -140,6 +141,20 @@ p code, li code, td code { background: #f1f5f9; color: #0f172a; padding: 2px 6px
 
 /* DB Visual */
 .illustration { display: flex; align-items: center; justify-content: center; }
+.illustration svg { max-width: 100%; height: auto; max-height: 360px; }
+
+.arch-flow, .seq-diagram, .er-diagram, .layered-arch {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+.arch-flow svg, .seq-diagram svg, .er-diagram svg, .layered-arch svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.comp-icon { margin-bottom: 12px; }
+.comp-icon svg { display: block; }
 .db-visual { display: flex; align-items: center; gap: 24px; }
 .db-cylinder { width: 80px; height: 100px; background: linear-gradient(180deg, #6366f1, #4f46e5); border-radius: 50% / 20%; position: relative; }
 .db-cylinder::before { content: ''; position: absolute; top: -10px; left: 0; width: 80px; height: 30px; background: #818cf8; border-radius: 50%; }

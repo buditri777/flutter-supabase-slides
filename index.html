@@ -13,73 +13,113 @@
 <div id="presentation">
 
 <!-- ====== SLIDE 1: COVER ====== -->
-<section class="slide cover active" data-slide="1">
+<section class="slide cover active">
   <div class="cover-content">
     <div class="badge">Pertemuan • Database Mobile</div>
-    <h1>Koneksi Database<br><span class="accent">Flutter ↔ Supabase</span></h1>
+    <h1>Koneksi Database<br><span class="accent">Flutter &harr; Supabase</span></h1>
     <p class="subtitle">Membangun Aplikasi Mobile dengan Backend-as-a-Service yang Modern</p>
     <div class="cover-meta">
       <div><strong>Mata Kuliah</strong><span>Pemrograman Mobile</span></div>
       <div><strong>Dosen</strong><span>Triyono, M.Kom</span></div>
-      <div><strong>Durasi</strong><span>±60 menit</span></div>
+      <div><strong>Durasi</strong><span>&plusmn;90 menit</span></div>
     </div>
+    <svg class="cover-decor" viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#3ecf8e" stroke-width="2">
+        <circle cx="100" cy="40" r="20" opacity="0.5"/>
+        <circle cx="200" cy="40" r="14" opacity="0.7"/>
+        <circle cx="300" cy="40" r="22"/>
+        <circle cx="400" cy="40" r="14" opacity="0.7"/>
+        <circle cx="500" cy="40" r="20" opacity="0.5"/>
+        <line x1="120" y1="40" x2="180" y2="40" opacity="0.4"/>
+        <line x1="214" y1="40" x2="278" y2="40" opacity="0.4"/>
+        <line x1="322" y1="40" x2="386" y2="40" opacity="0.4"/>
+        <line x1="414" y1="40" x2="480" y2="40" opacity="0.4"/>
+      </g>
+    </svg>
   </div>
 </section>
 
 <!-- ====== SLIDE 2: AGENDA ====== -->
-<section class="slide" data-slide="2">
+<section class="slide">
   <div class="slide-header"><span class="num">02</span><h2>Agenda Hari Ini</h2></div>
   <div class="agenda-grid">
     <div class="agenda-item"><span class="ag-num">1</span><h3>Konsep Database</h3><p>Apa itu database, jenis, dan relasi dengan aplikasi</p></div>
-    <div class="agenda-item"><span class="ag-num">2</span><h3>Mengenal Supabase</h3><p>Backend-as-a-Service modern, alternatif Firebase</p></div>
-    <div class="agenda-item"><span class="ag-num">3</span><h3>Setup Project</h3><p>Buat project Supabase + setup Flutter</p></div>
-    <div class="agenda-item"><span class="ag-num">4</span><h3>CRUD Operations</h3><p>Create, Read, Update, Delete via Flutter</p></div>
-    <div class="agenda-item"><span class="ag-num">5</span><h3>Authentication</h3><p>Login, register, session management</p></div>
-    <div class="agenda-item"><span class="ag-num">6</span><h3>Realtime & Storage</h3><p>Realtime subscriptions + upload file</p></div>
+    <div class="agenda-item"><span class="ag-num">2</span><h3>Arsitektur Flutter</h3><p>Widget tree, layer, dan bagaimana data mengalir</p></div>
+    <div class="agenda-item"><span class="ag-num">3</span><h3>Mengenal Supabase</h3><p>Backend-as-a-Service modern, alternatif Firebase</p></div>
+    <div class="agenda-item"><span class="ag-num">4</span><h3>Setup Project</h3><p>Buat project Supabase + setup Flutter</p></div>
+    <div class="agenda-item"><span class="ag-num">5</span><h3>CRUD &amp; State</h3><p>Create, Read, Update, Delete + state management</p></div>
+    <div class="agenda-item"><span class="ag-num">6</span><h3>Auth, Realtime &amp; Storage</h3><p>Login, sinkronisasi realtime, upload file</p></div>
   </div>
 </section>
 
 <!-- ====== SLIDE 3: APA ITU DATABASE ====== -->
-<section class="slide" data-slide="3">
+<section class="slide">
   <div class="slide-header"><span class="num">03</span><h2>Apa Itu Database?</h2></div>
   <div class="two-col">
     <div>
       <p class="lead">Database adalah <strong>kumpulan data terstruktur</strong> yang disimpan secara elektronik dalam sistem komputer, dikelola oleh DBMS (Database Management System).</p>
       <ul class="check-list">
-        <li><strong>Persisten</strong> — data tetap ada meski aplikasi ditutup</li>
-        <li><strong>Terstruktur</strong> — disimpan dalam tabel/dokumen yang konsisten</li>
-        <li><strong>Multi-user</strong> — banyak user bisa akses bersamaan</li>
-        <li><strong>Reliable</strong> — backup, transaksi, integritas data</li>
+        <li><strong>Persisten</strong> &mdash; data tetap ada meski aplikasi ditutup</li>
+        <li><strong>Terstruktur</strong> &mdash; disimpan dalam tabel/dokumen yang konsisten</li>
+        <li><strong>Multi-user</strong> &mdash; banyak user bisa akses bersamaan</li>
+        <li><strong>Reliable</strong> &mdash; backup, transaksi, integritas data</li>
       </ul>
     </div>
     <div class="illustration">
-      <div class="db-visual">
-        <div class="db-cylinder"></div>
-        <div class="db-arrow">⟷</div>
-        <div class="db-app">📱<span>Aplikasi</span></div>
-      </div>
+      <svg viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Phone -->
+        <rect x="20" y="40" width="80" height="160" rx="12" fill="#1a1a1a"/>
+        <rect x="26" y="50" width="68" height="130" rx="4" fill="#3ecf8e"/>
+        <circle cx="60" cy="190" r="4" fill="#fff"/>
+        <text x="60" y="115" font-family="Inter" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">Flutter</text>
+        <text x="60" y="130" font-family="Inter" font-size="9" fill="#fff" text-anchor="middle" opacity="0.8">Mobile App</text>
+        <!-- Arrow -->
+        <path d="M 105 120 L 195 120" stroke="#6b7280" stroke-width="2" stroke-dasharray="4 4"/>
+        <polygon points="195,120 188,116 188,124" fill="#6b7280"/>
+        <path d="M 195 130 L 105 130" stroke="#6b7280" stroke-width="2" stroke-dasharray="4 4"/>
+        <polygon points="105,130 112,126 112,134" fill="#6b7280"/>
+        <text x="150" y="115" font-family="Inter" font-size="9" fill="#6b7280" text-anchor="middle">request</text>
+        <text x="150" y="145" font-family="Inter" font-size="9" fill="#6b7280" text-anchor="middle">response</text>
+        <!-- Database cylinder -->
+        <ellipse cx="240" cy="80" rx="40" ry="12" fill="#6366f1"/>
+        <rect x="200" y="80" width="80" height="80" fill="#6366f1"/>
+        <ellipse cx="240" cy="160" rx="40" ry="12" fill="#4f46e5"/>
+        <ellipse cx="240" cy="80" rx="40" ry="12" fill="none" stroke="#a5b4fc" stroke-width="1"/>
+        <ellipse cx="240" cy="105" rx="40" ry="12" fill="none" stroke="#a5b4fc" stroke-width="1" opacity="0.5"/>
+        <ellipse cx="240" cy="130" rx="40" ry="12" fill="none" stroke="#a5b4fc" stroke-width="1" opacity="0.5"/>
+        <text x="240" y="124" font-family="Inter" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">Database</text>
+        <!-- Labels -->
+        <text x="60" y="225" font-family="Inter" font-size="10" fill="#6b7280" text-anchor="middle">CLIENT</text>
+        <text x="240" y="195" font-family="Inter" font-size="10" fill="#6b7280" text-anchor="middle">SERVER</text>
+      </svg>
     </div>
   </div>
 </section>
 
 <!-- ====== SLIDE 4: JENIS DATABASE ====== -->
-<section class="slide" data-slide="4">
+<section class="slide">
   <div class="slide-header"><span class="num">04</span><h2>Jenis-Jenis Database</h2></div>
   <div class="comparison-grid">
     <div class="comp-card relational">
+      <div class="comp-icon">
+        <svg viewBox="0 0 60 60" width="48" height="48"><rect x="6" y="10" width="48" height="8" fill="#3ecf8e"/><rect x="6" y="22" width="48" height="8" fill="#a7f3d0"/><rect x="6" y="34" width="48" height="8" fill="#a7f3d0"/><rect x="6" y="46" width="48" height="8" fill="#a7f3d0"/><line x1="22" y1="10" x2="22" y2="54" stroke="#fff" stroke-width="1"/><line x1="38" y1="10" x2="38" y2="54" stroke="#fff" stroke-width="1"/></svg>
+      </div>
       <h3>SQL / Relational</h3>
-      <p class="examples">PostgreSQL · MySQL · SQLite</p>
+      <p class="examples">PostgreSQL &middot; MySQL &middot; SQLite</p>
       <ul>
-        <li>Data dalam tabel (rows & columns)</li>
+        <li>Data dalam tabel (rows &amp; columns)</li>
         <li>Skema kaku, terdefinisi</li>
-        <li>Query pakai SQL</li>
+        <li>Query pakai SQL standar</li>
         <li>ACID compliant</li>
         <li>Cocok untuk: data transaksional, relasi kompleks</li>
       </ul>
     </div>
     <div class="comp-card nosql">
+      <div class="comp-icon">
+        <svg viewBox="0 0 60 60" width="48" height="48"><rect x="8" y="8" width="20" height="20" rx="3" fill="#f59e0b"/><rect x="32" y="8" width="20" height="20" rx="3" fill="#fbbf24"/><rect x="8" y="32" width="20" height="20" rx="3" fill="#fbbf24"/><rect x="32" y="32" width="20" height="20" rx="3" fill="#f59e0b"/></svg>
+      </div>
       <h3>NoSQL / Non-Relational</h3>
-      <p class="examples">MongoDB · Firestore · Redis</p>
+      <p class="examples">MongoDB &middot; Firestore &middot; Redis</p>
       <ul>
         <li>Data dalam dokumen/key-value/graph</li>
         <li>Skema fleksibel</li>
@@ -90,38 +130,222 @@
     </div>
   </div>
   <div class="info-box">
-    <strong>💡 Supabase pakai PostgreSQL</strong> — database relational paling populer dengan fitur lengkap (JSON, full-text search, geospatial).
+    <strong>&#128161; Supabase pakai PostgreSQL</strong> &mdash; database relational paling populer dengan fitur lengkap (JSON, full-text search, geospatial).
   </div>
 </section>
 
-<!-- ====== SLIDE 5: ARSITEKTUR DATABASE APLIKASI MOBILE ====== -->
-<section class="slide" data-slide="5">
-  <div class="slide-header"><span class="num">05</span><h2>Arsitektur Database di Aplikasi Mobile</h2></div>
-  <div class="arch-diagram">
-    <div class="arch-layer">
-      <div class="layer-label">CLIENT (Flutter)</div>
-      <div class="layer-content">📱 UI · State · Local Cache</div>
-    </div>
-    <div class="arch-arrow">⬇ HTTPS / WebSocket</div>
-    <div class="arch-layer api">
-      <div class="layer-label">BACKEND / API</div>
-      <div class="layer-content">REST API · GraphQL · Auth · Storage</div>
-    </div>
-    <div class="arch-arrow">⬇ SQL Query</div>
-    <div class="arch-layer db">
-      <div class="layer-label">DATABASE</div>
-      <div class="layer-content">🗄️ PostgreSQL (Supabase)</div>
-    </div>
-  </div>
-  <p class="caption">Flutter <em>tidak akses database langsung</em> — semua lewat API/SDK Supabase yang menjamin keamanan & validasi.</p>
-</section>
-
-<!-- ====== SLIDE 6: KENALAN SUPABASE ====== -->
-<section class="slide" data-slide="6">
-  <div class="slide-header"><span class="num">06</span><h2>Mengenal Supabase</h2></div>
+<!-- ====== SLIDE 5: ARSITEKTUR FLUTTER ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">05</span><h2>Arsitektur Flutter Framework</h2></div>
   <div class="two-col">
     <div>
-      <p class="lead"><strong>Supabase</strong> adalah open-source <em>Backend-as-a-Service</em> yang menyediakan database, auth, storage, dan realtime — semua dalam satu platform.</p>
+      <p class="lead">Flutter dibangun berlapis. Memahami arsitektur ini penting agar kita tahu di <em>layer</em> mana database harus diakses.</p>
+      <ul class="check-list">
+        <li><strong>Framework Layer</strong> &mdash; Widget, Material, Cupertino</li>
+        <li><strong>Engine Layer</strong> &mdash; Skia, Dart Runtime, Text rendering</li>
+        <li><strong>Embedder Layer</strong> &mdash; Platform-specific (Android/iOS)</li>
+      </ul>
+      <div class="info-box small">
+        <strong>Database call</strong> dilakukan di Framework Layer, bukan di Widget tree langsung. Pisahkan ke <code>service/</code> atau <code>repository/</code>.
+      </div>
+    </div>
+    <div class="illustration">
+      <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- Layers (Flutter architecture) -->
+        <rect x="20" y="20" width="280" height="50" rx="8" fill="#3ecf8e"/>
+        <text x="160" y="42" font-family="Inter" font-size="13" fill="#fff" font-weight="700" text-anchor="middle">FLUTTER FRAMEWORK</text>
+        <text x="160" y="58" font-family="Inter" font-size="10" fill="#fff" text-anchor="middle">Material &middot; Cupertino &middot; Widgets &middot; Rendering</text>
+
+        <rect x="20" y="80" width="280" height="50" rx="8" fill="#0ea5e9"/>
+        <text x="160" y="102" font-family="Inter" font-size="13" fill="#fff" font-weight="700" text-anchor="middle">FLUTTER ENGINE (C++)</text>
+        <text x="160" y="118" font-family="Inter" font-size="10" fill="#fff" text-anchor="middle">Skia &middot; Dart VM &middot; Text Rendering &middot; I/O</text>
+
+        <rect x="20" y="140" width="280" height="50" rx="8" fill="#6366f1"/>
+        <text x="160" y="162" font-family="Inter" font-size="13" fill="#fff" font-weight="700" text-anchor="middle">EMBEDDER</text>
+        <text x="160" y="178" font-family="Inter" font-size="10" fill="#fff" text-anchor="middle">Android &middot; iOS &middot; Web &middot; Desktop</text>
+
+        <rect x="20" y="200" width="280" height="50" rx="8" fill="#1f2937"/>
+        <text x="160" y="222" font-family="Inter" font-size="13" fill="#fff" font-weight="700" text-anchor="middle">PLATFORM OS</text>
+        <text x="160" y="238" font-family="Inter" font-size="10" fill="#fff" text-anchor="middle">SurfaceView &middot; Network &middot; Camera &middot; etc</text>
+
+        <!-- Network arrow to DB -->
+        <path d="M 160 260 L 160 295" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow1)"/>
+        <defs><marker id="arrow1" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto"><polygon points="0,0 6,3 0,6" fill="#dc2626"/></marker></defs>
+        <text x="180" y="282" font-family="Inter" font-size="10" fill="#dc2626">HTTPS / WebSocket</text>
+
+        <ellipse cx="160" cy="305" rx="50" ry="8" fill="#6366f1"/>
+        <text x="160" y="309" font-family="Inter" font-size="10" fill="#fff" text-anchor="middle">Supabase</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 6: WIDGET TREE & STATE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">06</span><h2>Widget Tree &amp; Aliran Data</h2></div>
+  <div class="two-col">
+    <div>
+      <p class="lead">Di Flutter, semua adalah <strong>Widget</strong>. UI berbentuk tree, dan data mengalir dari <em>parent</em> ke <em>child</em>.</p>
+      <h4>Konsep Penting:</h4>
+      <ul class="check-list">
+        <li><strong>StatelessWidget</strong> &mdash; UI yang tidak berubah</li>
+        <li><strong>StatefulWidget</strong> &mdash; UI dengan state lokal</li>
+        <li><strong>setState()</strong> &mdash; trigger rebuild widget</li>
+        <li><strong>FutureBuilder</strong> &mdash; untuk async data (sekali ambil)</li>
+        <li><strong>StreamBuilder</strong> &mdash; untuk realtime stream</li>
+      </ul>
+      <p>Database hasil call &rarr; di-pass ke widget &rarr; di-render.</p>
+    </div>
+    <div class="illustration">
+      <svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- Tree -->
+        <rect x="100" y="10" width="100" height="36" rx="6" fill="#3ecf8e"/>
+        <text x="150" y="32" font-family="Inter" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">MaterialApp</text>
+
+        <line x1="150" y1="46" x2="150" y2="70" stroke="#9ca3af" stroke-width="2"/>
+
+        <rect x="100" y="70" width="100" height="36" rx="6" fill="#10b981"/>
+        <text x="150" y="92" font-family="Inter" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">Scaffold</text>
+
+        <line x1="150" y1="106" x2="80" y2="130" stroke="#9ca3af" stroke-width="2"/>
+        <line x1="150" y1="106" x2="150" y2="130" stroke="#9ca3af" stroke-width="2"/>
+        <line x1="150" y1="106" x2="220" y2="130" stroke="#9ca3af" stroke-width="2"/>
+
+        <rect x="20" y="130" width="120" height="36" rx="6" fill="#0ea5e9"/>
+        <text x="80" y="152" font-family="Inter" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">AppBar</text>
+
+        <rect x="100" y="130" width="100" height="36" rx="6" fill="#0ea5e9"/>
+        <text x="150" y="152" font-family="Inter" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">Body</text>
+
+        <rect x="180" y="130" width="120" height="36" rx="6" fill="#0ea5e9"/>
+        <text x="240" y="152" font-family="Inter" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">FAB</text>
+
+        <line x1="150" y1="166" x2="150" y2="190" stroke="#9ca3af" stroke-width="2"/>
+
+        <rect x="80" y="190" width="140" height="36" rx="6" fill="#6366f1"/>
+        <text x="150" y="212" font-family="Inter" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">FutureBuilder</text>
+
+        <line x1="150" y1="226" x2="150" y2="250" stroke="#9ca3af" stroke-width="2"/>
+
+        <rect x="80" y="250" width="140" height="36" rx="6" fill="#f59e0b"/>
+        <text x="150" y="272" font-family="Inter" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">ListView</text>
+
+        <line x1="150" y1="286" x2="150" y2="305" stroke="#9ca3af" stroke-width="2"/>
+
+        <rect x="100" y="295" width="100" height="20" rx="4" fill="#fbbf24"/>
+        <text x="150" y="309" font-family="Inter" font-size="9" fill="#1a1a1a" font-weight="700" text-anchor="middle">ListTile (data DB)</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 7: ARSITEKTUR DATABASE APLIKASI MOBILE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">07</span><h2>Arsitektur Database Aplikasi Mobile</h2></div>
+  <div class="arch-flow">
+    <svg viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg">
+      <!-- Client -->
+      <rect x="20" y="20" width="220" height="340" rx="12" fill="#fff" stroke="#3ecf8e" stroke-width="2"/>
+      <text x="130" y="48" font-family="Inter" font-size="13" fill="#1c8656" font-weight="800" text-anchor="middle">CLIENT (Flutter)</text>
+      <rect x="40" y="68" width="180" height="40" rx="6" fill="#ecfdf5"/>
+      <text x="130" y="92" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">UI / Widget Tree</text>
+      <rect x="40" y="118" width="180" height="40" rx="6" fill="#ecfdf5"/>
+      <text x="130" y="142" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">State Management</text>
+      <rect x="40" y="168" width="180" height="40" rx="6" fill="#ecfdf5"/>
+      <text x="130" y="192" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">Repository / Service</text>
+      <rect x="40" y="218" width="180" height="40" rx="6" fill="#d1fae5"/>
+      <text x="130" y="242" font-family="Inter" font-size="11" fill="#065f46" font-weight="700" text-anchor="middle">Supabase SDK</text>
+      <rect x="40" y="268" width="180" height="40" rx="6" fill="#ecfdf5"/>
+      <text x="130" y="292" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">Local Cache (SQLite)</text>
+      <text x="130" y="345" font-family="Inter" font-size="9" fill="#6b7280" text-anchor="middle">Mobile / Web Device</text>
+
+      <!-- Connection lines -->
+      <path d="M 240 190 L 320 190" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+      <text x="280" y="180" font-family="Inter" font-size="10" fill="#6366f1" font-weight="600" text-anchor="middle">HTTPS</text>
+      <text x="280" y="208" font-family="Inter" font-size="9" fill="#6b7280" text-anchor="middle">REST/WebSocket</text>
+
+      <!-- Supabase backend -->
+      <rect x="320" y="20" width="220" height="340" rx="12" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+      <text x="430" y="48" font-family="Inter" font-size="13" fill="#4338ca" font-weight="800" text-anchor="middle">BACKEND (Supabase)</text>
+      <rect x="340" y="68" width="180" height="40" rx="6" fill="#eef2ff"/>
+      <text x="430" y="92" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">PostgREST API</text>
+      <rect x="340" y="118" width="180" height="40" rx="6" fill="#eef2ff"/>
+      <text x="430" y="142" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">GoTrue (Auth)</text>
+      <rect x="340" y="168" width="180" height="40" rx="6" fill="#eef2ff"/>
+      <text x="430" y="192" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">Realtime (WebSocket)</text>
+      <rect x="340" y="218" width="180" height="40" rx="6" fill="#eef2ff"/>
+      <text x="430" y="242" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">Storage (S3)</text>
+      <rect x="340" y="268" width="180" height="40" rx="6" fill="#eef2ff"/>
+      <text x="430" y="292" font-family="Inter" font-size="11" fill="#1a1a1a" font-weight="600" text-anchor="middle">Edge Functions</text>
+      <text x="430" y="345" font-family="Inter" font-size="9" fill="#6b7280" text-anchor="middle">Auto-generated from Postgres</text>
+
+      <!-- Connection -->
+      <path d="M 540 190 L 620 190" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow2)"/>
+      <text x="580" y="180" font-family="Inter" font-size="10" fill="#dc2626" font-weight="600" text-anchor="middle">SQL</text>
+
+      <!-- Database -->
+      <rect x="620" y="20" width="160" height="340" rx="12" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+      <text x="700" y="48" font-family="Inter" font-size="13" fill="#991b1b" font-weight="800" text-anchor="middle">DATABASE</text>
+      <ellipse cx="700" cy="100" rx="60" ry="14" fill="#fee2e2"/>
+      <rect x="640" y="100" width="120" height="120" fill="#fee2e2"/>
+      <ellipse cx="700" cy="220" rx="60" ry="14" fill="#fecaca"/>
+      <ellipse cx="700" cy="100" rx="60" ry="14" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+      <ellipse cx="700" cy="140" rx="60" ry="14" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.4"/>
+      <ellipse cx="700" cy="180" rx="60" ry="14" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.4"/>
+      <text x="700" y="165" font-family="Inter" font-size="13" fill="#991b1b" font-weight="800" text-anchor="middle">PostgreSQL</text>
+      <text x="700" y="250" font-family="Inter" font-size="10" fill="#6b7280" text-anchor="middle">Tables &middot; Views</text>
+      <text x="700" y="266" font-family="Inter" font-size="10" fill="#6b7280" text-anchor="middle">Functions &middot; Triggers</text>
+      <text x="700" y="282" font-family="Inter" font-size="10" fill="#6b7280" text-anchor="middle">RLS Policies</text>
+
+      <defs><marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#6366f1"/></marker></defs>
+    </svg>
+  </div>
+  <p class="caption">Flutter <strong>tidak akses database langsung</strong> &mdash; semua lewat API/SDK Supabase yang menjamin keamanan, validasi, dan auth.</p>
+</section>
+
+<!-- ====== SLIDE 8: CLEAN ARCHITECTURE FLUTTER ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">08</span><h2>Clean Architecture di Flutter</h2></div>
+  <p class="lead">Pola umum untuk project skala menengah-besar &mdash; pisahkan UI, logic, dan data access.</p>
+  <div class="layered-arch">
+    <svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+      <!-- Presentation -->
+      <rect x="20" y="20" width="760" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+      <text x="40" y="45" font-family="Inter" font-size="13" font-weight="800" fill="#78350f">PRESENTATION</text>
+      <text x="40" y="62" font-family="Inter" font-size="10" fill="#78350f">Widgets &middot; Pages &middot; Controllers (Provider/Bloc/Riverpod)</text>
+      <text x="700" y="50" font-family="JetBrains Mono" font-size="10" fill="#78350f" text-anchor="end">lib/screens/</text>
+
+      <!-- Domain -->
+      <rect x="20" y="80" width="760" height="50" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+      <text x="40" y="105" font-family="Inter" font-size="13" font-weight="800" fill="#1e3a8a">DOMAIN</text>
+      <text x="40" y="122" font-family="Inter" font-size="10" fill="#1e3a8a">Entities &middot; Use Cases &middot; Business Rules (pure Dart)</text>
+      <text x="700" y="110" font-family="JetBrains Mono" font-size="10" fill="#1e3a8a" text-anchor="end">lib/domain/</text>
+
+      <!-- Data -->
+      <rect x="20" y="140" width="760" height="50" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+      <text x="40" y="165" font-family="Inter" font-size="13" font-weight="800" fill="#14532d">DATA</text>
+      <text x="40" y="182" font-family="Inter" font-size="10" fill="#14532d">Repositories &middot; Models &middot; Data Sources (Supabase, Local DB)</text>
+      <text x="700" y="170" font-family="JetBrains Mono" font-size="10" fill="#14532d" text-anchor="end">lib/data/</text>
+
+      <!-- Arrows -->
+      <path d="M 400 70 L 400 80" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrowDown)"/>
+      <path d="M 400 130 L 400 140" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrowDown)"/>
+      <defs><marker id="arrowDown" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto"><polygon points="0,0 4,6 8,0" fill="#9ca3af"/></marker></defs>
+
+      <text x="400" y="220" font-family="Inter" font-size="11" font-style="italic" fill="#6b7280" text-anchor="middle">Higher layer hanya tahu lower layer melalui interface, tidak sebaliknya (Dependency Rule)</text>
+    </svg>
+  </div>
+  <div class="info-box small">
+    <strong>Manfaat:</strong> testable, mudah ganti backend (misal Supabase &rarr; Firebase), kode UI tetap bersih dari logic database.
+  </div>
+</section>
+
+<!-- ====== SLIDE 9: KENALAN SUPABASE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">09</span><h2>Mengenal Supabase</h2></div>
+  <div class="two-col">
+    <div>
+      <p class="lead"><strong>Supabase</strong> adalah open-source <em>Backend-as-a-Service</em> yang menyediakan database, auth, storage, dan realtime &mdash; semua dalam satu platform.</p>
       <p>Tagline mereka: <em>"The open source Firebase alternative"</em></p>
       <h4>Fitur Utama:</h4>
       <ul class="check-list">
@@ -142,9 +366,9 @@
   </div>
 </section>
 
-<!-- ====== SLIDE 7: SUPABASE VS FIREBASE ====== -->
-<section class="slide" data-slide="7">
-  <div class="slide-header"><span class="num">07</span><h2>Supabase vs Firebase</h2></div>
+<!-- ====== SLIDE 10: SUPABASE VS FIREBASE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">10</span><h2>Supabase vs Firebase</h2></div>
   <table class="compare-table">
     <thead>
       <tr><th>Aspek</th><th>Supabase</th><th>Firebase</th></tr>
@@ -152,38 +376,149 @@
     <tbody>
       <tr><td>Database</td><td>PostgreSQL (Relational)</td><td>Firestore (NoSQL)</td></tr>
       <tr><td>Query</td><td>SQL + REST + GraphQL</td><td>Method-based</td></tr>
-      <tr><td>Open Source</td><td>✅ Ya (MIT)</td><td>❌ Tidak</td></tr>
-      <tr><td>Self-Hosted</td><td>✅ Bisa</td><td>❌ Tidak bisa</td></tr>
+      <tr><td>Open Source</td><td>&check; Ya (MIT)</td><td>&times; Tidak</td></tr>
+      <tr><td>Self-Hosted</td><td>&check; Bisa</td><td>&times; Tidak bisa</td></tr>
       <tr><td>Vendor Lock-in</td><td>Rendah (standar SQL)</td><td>Tinggi</td></tr>
-      <tr><td>Realtime</td><td>✅ WebSocket native</td><td>✅ Native</td></tr>
+      <tr><td>Realtime</td><td>&check; WebSocket native</td><td>&check; Native</td></tr>
       <tr><td>Pricing</td><td>$25/mo Pro</td><td>Pay as you go</td></tr>
       <tr><td>Maturity</td><td>Newer (2020)</td><td>Mature (2011)</td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- ====== SLIDE 8: PROSES SETUP SUPABASE ====== -->
-<section class="slide" data-slide="8">
-  <div class="slide-header"><span class="num">08</span><h2>Setup Project Supabase</h2></div>
+<!-- ====== SLIDE 11: FLOW REQUEST-RESPONSE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">11</span><h2>Alur Request-Response</h2></div>
+  <p class="lead">Apa yang terjadi saat user tap tombol "Add Todo" di Flutter?</p>
+  <div class="seq-diagram">
+    <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+      <!-- Lifelines -->
+      <g font-family="Inter" font-size="11" font-weight="700">
+        <rect x="20" y="20" width="120" height="30" rx="4" fill="#3ecf8e"/><text x="80" y="40" fill="#fff" text-anchor="middle">User / UI</text>
+        <line x1="80" y1="50" x2="80" y2="340" stroke="#3ecf8e" stroke-dasharray="4 4"/>
+
+        <rect x="180" y="20" width="120" height="30" rx="4" fill="#0ea5e9"/><text x="240" y="40" fill="#fff" text-anchor="middle">Repository</text>
+        <line x1="240" y1="50" x2="240" y2="340" stroke="#0ea5e9" stroke-dasharray="4 4"/>
+
+        <rect x="340" y="20" width="120" height="30" rx="4" fill="#6366f1"/><text x="400" y="40" fill="#fff" text-anchor="middle">Supabase SDK</text>
+        <line x1="400" y1="50" x2="400" y2="340" stroke="#6366f1" stroke-dasharray="4 4"/>
+
+        <rect x="500" y="20" width="120" height="30" rx="4" fill="#a855f7"/><text x="560" y="40" fill="#fff" text-anchor="middle">PostgREST</text>
+        <line x1="560" y1="50" x2="560" y2="340" stroke="#a855f7" stroke-dasharray="4 4"/>
+
+        <rect x="660" y="20" width="120" height="30" rx="4" fill="#dc2626"/><text x="720" y="40" fill="#fff" text-anchor="middle">PostgreSQL</text>
+        <line x1="720" y1="50" x2="720" y2="340" stroke="#dc2626" stroke-dasharray="4 4"/>
+      </g>
+
+      <!-- Messages -->
+      <g font-family="Inter" font-size="10">
+        <line x1="80" y1="80" x2="240" y2="80" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#a3)"/>
+        <text x="160" y="74" text-anchor="middle">addTodo("Belajar")</text>
+
+        <line x1="240" y1="115" x2="400" y2="115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#a3)"/>
+        <text x="320" y="109" text-anchor="middle">.from('todos').insert(...)</text>
+
+        <line x1="400" y1="150" x2="560" y2="150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#a3)"/>
+        <text x="480" y="144" text-anchor="middle">POST /rest/v1/todos (HTTPS + JWT)</text>
+
+        <line x1="560" y1="185" x2="720" y2="185" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#a3)"/>
+        <text x="640" y="179" text-anchor="middle">INSERT INTO todos (...)</text>
+
+        <line x1="720" y1="225" x2="560" y2="225" stroke="#22c55e" stroke-width="1.5" marker-end="url(#a3g)"/>
+        <text x="640" y="219" text-anchor="middle" fill="#16a34a">row created (id, ...)</text>
+
+        <line x1="560" y1="260" x2="400" y2="260" stroke="#22c55e" stroke-width="1.5" marker-end="url(#a3g)"/>
+        <text x="480" y="254" text-anchor="middle" fill="#16a34a">JSON 201 Created</text>
+
+        <line x1="400" y1="295" x2="240" y2="295" stroke="#22c55e" stroke-width="1.5" marker-end="url(#a3g)"/>
+        <text x="320" y="289" text-anchor="middle" fill="#16a34a">Map&lt;String,dynamic&gt;</text>
+
+        <line x1="240" y1="330" x2="80" y2="330" stroke="#22c55e" stroke-width="1.5" marker-end="url(#a3g)"/>
+        <text x="160" y="324" text-anchor="middle" fill="#16a34a">UI rebuild &amp; show toast</text>
+      </g>
+      <defs>
+        <marker id="a3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#1a1a1a"/></marker>
+        <marker id="a3g" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#22c55e"/></marker>
+      </defs>
+    </svg>
+  </div>
+</section>
+
+<!-- ====== SLIDE 12: SETUP PROJECT SUPABASE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">12</span><h2>Setup Project Supabase</h2></div>
   <div class="steps">
     <div class="step"><div class="step-num">1</div><div><h4>Buka supabase.com</h4><p>Sign up dengan GitHub atau email. Free tier sudah cukup untuk belajar.</p></div></div>
     <div class="step"><div class="step-num">2</div><div><h4>Create New Project</h4><p>Pilih nama project, password DB, dan region (pilih Singapore untuk Indonesia).</p></div></div>
     <div class="step"><div class="step-num">3</div><div><h4>Tunggu Provisioning</h4><p>Sekitar 1-2 menit. Supabase akan siapkan PostgreSQL + API + Auth.</p></div></div>
-    <div class="step"><div class="step-num">4</div><div><h4>Catat Credentials</h4><p>Di <em>Settings → API</em>: <code>Project URL</code> dan <code>anon key</code> akan dipakai di Flutter.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div><h4>Catat Credentials</h4><p>Di <em>Settings &rarr; API</em>: <code>Project URL</code> dan <code>anon key</code> akan dipakai di Flutter.</p></div></div>
     <div class="step"><div class="step-num">5</div><div><h4>Buat Tabel</h4><p>Pakai <em>Table Editor</em> atau SQL Editor untuk define skema.</p></div></div>
   </div>
 </section>
 
-<!-- ====== SLIDE 9: BUAT TABEL ====== -->
-<section class="slide" data-slide="9">
-  <div class="slide-header"><span class="num">09</span><h2>Membuat Tabel di Supabase</h2></div>
-  <p>Contoh: tabel <code>todos</code> untuk aplikasi To-Do List</p>
+<!-- ====== SLIDE 13: ER DIAGRAM ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">13</span><h2>Skema Database (ER Diagram)</h2></div>
+  <p class="lead">Contoh aplikasi To-Do List dengan auth user.</p>
+  <div class="er-diagram">
+    <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+      <!-- Users -->
+      <rect x="40" y="40" width="220" height="220" rx="8" fill="#fff" stroke="#3ecf8e" stroke-width="2"/>
+      <rect x="40" y="40" width="220" height="36" rx="8" fill="#3ecf8e"/>
+      <text x="150" y="63" font-family="Inter" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">auth.users</text>
+
+      <g font-family="JetBrains Mono" font-size="11" fill="#1a1a1a">
+        <text x="60" y="100">&#128273; id : uuid (PK)</text>
+        <text x="60" y="125">email : text</text>
+        <text x="60" y="150">encrypted_password</text>
+        <text x="60" y="175">created_at : timestamp</text>
+        <text x="60" y="200">last_sign_in : timestamp</text>
+        <text x="60" y="225">role : text</text>
+      </g>
+
+      <!-- Relation 1:N -->
+      <line x1="260" y1="150" x2="430" y2="150" stroke="#1a1a1a" stroke-width="2"/>
+      <text x="345" y="142" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">1</text>
+      <text x="345" y="166" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">N</text>
+
+      <!-- Todos -->
+      <rect x="430" y="40" width="240" height="280" rx="8" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+      <rect x="430" y="40" width="240" height="36" rx="8" fill="#6366f1"/>
+      <text x="550" y="63" font-family="Inter" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">public.todos</text>
+
+      <g font-family="JetBrains Mono" font-size="11" fill="#1a1a1a">
+        <text x="450" y="100">&#128273; id : uuid (PK)</text>
+        <text x="450" y="125">&#128279; user_id : uuid (FK)</text>
+        <text x="450" y="150">title : text NOT NULL</text>
+        <text x="450" y="175">description : text</text>
+        <text x="450" y="200">completed : boolean</text>
+        <text x="450" y="225">priority : int (1-3)</text>
+        <text x="450" y="250">due_date : timestamp</text>
+        <text x="450" y="275">created_at : timestamp</text>
+        <text x="450" y="300">updated_at : timestamp</text>
+      </g>
+
+      <text x="400" y="345" font-family="Inter" font-size="11" font-style="italic" fill="#6b7280">
+        1 user dapat memiliki banyak (N) todos &middot; FK menjamin integrity data
+      </text>
+    </svg>
+  </div>
+</section>
+
+<!-- ====== SLIDE 14: BUAT TABEL ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">14</span><h2>Membuat Tabel di Supabase</h2></div>
+  <p>SQL untuk tabel <code>todos</code> dengan Row Level Security:</p>
   <pre><code class="lang-sql">create table todos (
   id          uuid default uuid_generate_v4() primary key,
-  user_id     uuid references auth.users(id),
+  user_id     uuid references auth.users(id) on delete cascade,
   title       text not null,
+  description text,
   completed   boolean default false,
-  created_at  timestamptz default now()
+  priority    int default 1 check (priority between 1 and 3),
+  due_date    timestamptz,
+  created_at  timestamptz default now(),
+  updated_at  timestamptz default now()
 );
 
 -- Enable Row Level Security
@@ -192,22 +527,22 @@ alter table todos enable row level security;
 -- Policy: user hanya bisa akses todo miliknya sendiri
 create policy "Users can manage their own todos"
   on todos for all
-  using (auth.uid() = user_id);</code></pre>
-  <div class="info-box">
-    <strong>🔒 Row Level Security (RLS)</strong> — fitur PostgreSQL untuk membatasi akses per row berdasarkan user. <em>Wajib enabled</em> di Supabase.
-  </div>
+  using (auth.uid() = user_id);
+
+-- Index untuk performa query
+create index todos_user_id_idx on todos(user_id);
+create index todos_created_at_idx on todos(created_at desc);</code></pre>
 </section>
 
-<!-- ====== SLIDE 10: SETUP FLUTTER ====== -->
-<section class="slide" data-slide="10">
-  <div class="slide-header"><span class="num">10</span><h2>Setup Flutter Project</h2></div>
+<!-- ====== SLIDE 15: SETUP FLUTTER ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">15</span><h2>Setup Flutter Project</h2></div>
   <p><strong>Step 1:</strong> Tambahkan dependency di <code>pubspec.yaml</code></p>
   <pre><code class="lang-yaml">dependencies:
   flutter:
     sdk: flutter
   supabase_flutter: ^2.5.0</code></pre>
-  <p><strong>Step 2:</strong> Install package</p>
-  <pre><code class="lang-bash">flutter pub get</code></pre>
+  <p><strong>Step 2:</strong> Install package &mdash; <code>flutter pub get</code></p>
   <p><strong>Step 3:</strong> Initialize di <code>main.dart</code></p>
   <pre><code class="lang-dart">import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -226,37 +561,91 @@ Future&lt;void&gt; main() async {
 final supabase = Supabase.instance.client;</code></pre>
 </section>
 
-<!-- ====== SLIDE 11: CREATE (INSERT) ====== -->
-<section class="slide" data-slide="11">
-  <div class="slide-header"><span class="num">11</span><h2>CRUD: Create (Insert Data)</h2></div>
-  <p>Menambahkan data baru ke tabel <code>todos</code>:</p>
-  <pre><code class="lang-dart">Future&lt;void&gt; addTodo(String title) async {
-  try {
-    await supabase.from('todos').insert({
-      'title': title,
-      'completed': false,
-      'user_id': supabase.auth.currentUser!.id,
-    });
-    print('Todo berhasil ditambahkan!');
-  } on PostgrestException catch (e) {
-    print('Error: ${e.message}');
-  }
-}
-
-// Pemakaian:
-ElevatedButton(
-  onPressed: () =&gt; addTodo('Belajar Flutter'),
-  child: Text('Add Todo'),
-);</code></pre>
-  <div class="info-box small">
-    <strong>Insert multiple:</strong> kirim List of Map → <code>.insert([{...}, {...}])</code>
+<!-- ====== SLIDE 16: FOLDER STRUCTURE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">16</span><h2>Folder Structure (Best Practice)</h2></div>
+  <div class="two-col">
+    <div>
+      <p class="lead">Pisahkan per layer agar maintainable. Cocok untuk project kecil-menengah.</p>
+      <ul class="check-list">
+        <li><strong>screens/</strong> &mdash; halaman aplikasi</li>
+        <li><strong>widgets/</strong> &mdash; widget reusable</li>
+        <li><strong>models/</strong> &mdash; class representasi data</li>
+        <li><strong>services/</strong> &mdash; wrapper Supabase call</li>
+        <li><strong>providers/</strong> &mdash; state management</li>
+        <li><strong>utils/</strong> &mdash; helper, konstanta, format</li>
+      </ul>
+    </div>
+    <div>
+      <pre><code class="lang-bash">lib/
+  main.dart
+  config/
+    supabase_config.dart
+  models/
+    todo.dart
+    user_profile.dart
+  services/
+    auth_service.dart
+    todo_service.dart
+    storage_service.dart
+  providers/
+    auth_provider.dart
+    todo_provider.dart
+  screens/
+    auth/
+      login_screen.dart
+      register_screen.dart
+    home/
+      todo_list_screen.dart
+      todo_form_screen.dart
+  widgets/
+    todo_tile.dart
+    loading_indicator.dart
+  utils/
+    constants.dart
+    formatters.dart</code></pre>
+    </div>
   </div>
 </section>
 
-<!-- ====== SLIDE 12: READ (SELECT) ====== -->
-<section class="slide" data-slide="12">
-  <div class="slide-header"><span class="num">12</span><h2>CRUD: Read (Select Data)</h2></div>
-  <pre><code class="lang-dart">// Ambil semua todos
+<!-- ====== SLIDE 17: CREATE (INSERT) ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">17</span><h2>CRUD: Create (Insert Data)</h2></div>
+  <pre><code class="lang-dart">// services/todo_service.dart
+class TodoService {
+  final _client = Supabase.instance.client;
+
+  Future&lt;void&gt; addTodo(String title, {String? description}) async {
+    try {
+      await _client.from('todos').insert({
+        'title': title,
+        'description': description,
+        'completed': false,
+        'user_id': _client.auth.currentUser!.id,
+      });
+    } on PostgrestException catch (e) {
+      throw Exception('Gagal menambahkan todo: ${e.message}');
+    }
+  }
+}
+
+// Pemakaian di UI
+final service = TodoService();
+ElevatedButton(
+  onPressed: () async {
+    await service.addTodo('Belajar Flutter');
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Todo ditambahkan!')),
+    );
+  },
+  child: const Text('Add Todo'),
+);</code></pre>
+</section>
+
+<!-- ====== SLIDE 18: READ (SELECT) ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">18</span><h2>CRUD: Read (Select Data)</h2></div>
+  <pre><code class="lang-dart">// Ambil semua todos user yang login
 Future&lt;List&lt;Map&lt;String, dynamic&gt;&gt;&gt; getTodos() async {
   final data = await supabase
       .from('todos')
@@ -268,15 +657,15 @@ Future&lt;List&lt;Map&lt;String, dynamic&gt;&gt;&gt; getTodos() async {
 // Dengan filter
 final completed = await supabase
     .from('todos')
-    .select()
+    .select('id, title, completed')
     .eq('completed', true)
     .limit(10);
 
-// Pakai di Widget (FutureBuilder)
+// Render dengan FutureBuilder
 FutureBuilder(
   future: getTodos(),
   builder: (ctx, snapshot) {
-    if (!snapshot.hasData) return CircularProgressIndicator();
+    if (!snapshot.hasData) return const CircularProgressIndicator();
     final todos = snapshot.data!;
     return ListView.builder(
       itemCount: todos.length,
@@ -286,9 +675,9 @@ FutureBuilder(
 );</code></pre>
 </section>
 
-<!-- ====== SLIDE 13: UPDATE & DELETE ====== -->
-<section class="slide" data-slide="13">
-  <div class="slide-header"><span class="num">13</span><h2>CRUD: Update & Delete</h2></div>
+<!-- ====== SLIDE 19: UPDATE & DELETE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">19</span><h2>CRUD: Update &amp; Delete</h2></div>
   <div class="two-col-equal">
     <div>
       <h4>Update</h4>
@@ -322,9 +711,9 @@ FutureBuilder(
   </table>
 </section>
 
-<!-- ====== SLIDE 14: AUTH ====== -->
-<section class="slide" data-slide="14">
-  <div class="slide-header"><span class="num">14</span><h2>Authentication: Sign Up & Sign In</h2></div>
+<!-- ====== SLIDE 20: AUTH ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">20</span><h2>Authentication: Sign Up &amp; Sign In</h2></div>
   <pre><code class="lang-dart">// REGISTER
 Future&lt;void&gt; signUp(String email, String password) async {
   final response = await supabase.auth.signUp(
@@ -344,9 +733,7 @@ Future&lt;void&gt; signIn(String email, String password) async {
 }
 
 // LOGOUT
-Future&lt;void&gt; signOut() async {
-  await supabase.auth.signOut();
-}
+Future&lt;void&gt; signOut() =&gt; supabase.auth.signOut();
 
 // LISTEN AUTH CHANGE
 supabase.auth.onAuthStateChange.listen((data) {
@@ -355,10 +742,10 @@ supabase.auth.onAuthStateChange.listen((data) {
 });</code></pre>
 </section>
 
-<!-- ====== SLIDE 15: REALTIME ====== -->
-<section class="slide" data-slide="15">
-  <div class="slide-header"><span class="num">15</span><h2>Realtime Subscriptions</h2></div>
-  <p>Update UI otomatis saat data berubah di database (mirip chat):</p>
+<!-- ====== SLIDE 21: REALTIME ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">21</span><h2>Realtime Subscriptions</h2></div>
+  <p>Update UI otomatis saat data berubah di database:</p>
   <pre><code class="lang-dart">// Stream realtime
 final stream = supabase
     .from('todos')
@@ -369,7 +756,7 @@ final stream = supabase
 StreamBuilder(
   stream: stream,
   builder: (ctx, snapshot) {
-    if (!snapshot.hasData) return CircularProgressIndicator();
+    if (!snapshot.hasData) return const CircularProgressIndicator();
     final todos = snapshot.data!;
     return ListView.builder(
       itemCount: todos.length,
@@ -381,14 +768,14 @@ StreamBuilder(
     );
   },
 );</code></pre>
-  <div class="info-box">
-    <strong>⚡ Realtime aktif</strong> di Supabase Dashboard → Database → Replication → toggle table.
+  <div class="info-box small">
+    <strong>&#9889; Realtime aktif</strong> di Supabase Dashboard &rarr; Database &rarr; Replication &rarr; toggle table.
   </div>
 </section>
 
-<!-- ====== SLIDE 16: STORAGE ====== -->
-<section class="slide" data-slide="16">
-  <div class="slide-header"><span class="num">16</span><h2>Upload File ke Storage</h2></div>
+<!-- ====== SLIDE 22: STORAGE ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">22</span><h2>Upload File ke Storage</h2></div>
   <pre><code class="lang-dart">import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
@@ -410,88 +797,97 @@ final imageUrl = supabase.storage
     .from('avatars')
     .getPublicUrl(fileName);
 
-print('Image uploaded: $imageUrl');
-
 // 4. Save URL ke tabel
 await supabase.from('profiles').update({
   'avatar_url': imageUrl,
 }).eq('id', supabase.auth.currentUser!.id);</code></pre>
 </section>
 
-<!-- ====== SLIDE 17: BEST PRACTICES ====== -->
-<section class="slide" data-slide="17">
-  <div class="slide-header"><span class="num">17</span><h2>Best Practices</h2></div>
+<!-- ====== SLIDE 23: STATE MANAGEMENT OPTIONS ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">23</span><h2>State Management Options</h2></div>
+  <p class="lead">Untuk aplikasi yang konek database, pilih state management yang tepat agar UI tidak berantakan.</p>
   <div class="practices-grid">
-    <div class="practice"><div class="p-icon">🔒</div><h4>Aktifkan RLS</h4><p>Selalu enable Row Level Security supaya data tidak bisa diakses sembarangan</p></div>
-    <div class="practice"><div class="p-icon">🔑</div><h4>Pakai anon key, bukan service key</h4><p>Service key punya akses penuh — JANGAN expose di client app</p></div>
-    <div class="practice"><div class="p-icon">📊</div><h4>Index pada kolom yang sering di-query</h4><p><code>create index on todos(user_id);</code></p></div>
-    <div class="practice"><div class="p-icon">⚡</div><h4>Gunakan .select() spesifik</h4><p>Pilih kolom yang perlu saja: <code>.select('id, title')</code></p></div>
-    <div class="practice"><div class="p-icon">🛡️</div><h4>Validasi input di client + server</h4><p>Pakai constraint DB (NOT NULL, CHECK) untuk safety</p></div>
-    <div class="practice"><div class="p-icon">📝</div><h4>Handle error dengan baik</h4><p>Try-catch <code>PostgrestException</code> dan <code>AuthException</code></p></div>
+    <div class="practice"><div class="p-icon">&#128293;</div><h4>setState()</h4><p>Bawaan Flutter, hanya untuk state lokal di satu widget. Sederhana, tapi tidak scalable.</p></div>
+    <div class="practice"><div class="p-icon">&#128261;</div><h4>Provider</h4><p>Resmi direkomendasikan Flutter team. Ringan, mudah dipelajari, cocok project kecil-menengah.</p></div>
+    <div class="practice"><div class="p-icon">&#127919;</div><h4>Riverpod</h4><p>Penerus Provider. Compile-safe, dependency injection bawaan. Trend di 2024+.</p></div>
+    <div class="practice"><div class="p-icon">&#128202;</div><h4>BLoC / Cubit</h4><p>Berbasis stream &amp; event. Cocok untuk app besar dengan business logic kompleks.</p></div>
+    <div class="practice"><div class="p-icon">&#9889;</div><h4>GetX</h4><p>All-in-one (state, route, DI). Cepat dipakai tapi opini terbagi soal best practice.</p></div>
+    <div class="practice"><div class="p-icon">&#128269;</div><h4>Signals (Solidart)</h4><p>Reactive primitives baru. Mirip React Signals/Vue Reactivity.</p></div>
+  </div>
+  <div class="info-box small">
+    <strong>Saran untuk pemula:</strong> mulai dengan <code>Provider</code> atau <code>Riverpod</code>, baru pindah ke BLoC saat aplikasi makin kompleks.
   </div>
 </section>
 
-<!-- ====== SLIDE 18: STUDI KASUS ====== -->
-<section class="slide" data-slide="18">
-  <div class="slide-header"><span class="num">18</span><h2>Studi Kasus: Aplikasi Catatan</h2></div>
+<!-- ====== SLIDE 24: BEST PRACTICES ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">24</span><h2>Best Practices</h2></div>
+  <div class="practices-grid">
+    <div class="practice"><div class="p-icon">&#128274;</div><h4>Aktifkan RLS</h4><p>Selalu enable Row Level Security supaya data tidak bisa diakses sembarangan</p></div>
+    <div class="practice"><div class="p-icon">&#128273;</div><h4>Pakai anon key, bukan service key</h4><p>Service key punya akses penuh &mdash; JANGAN expose di client app</p></div>
+    <div class="practice"><div class="p-icon">&#128202;</div><h4>Index pada kolom yang sering di-query</h4><p><code>create index on todos(user_id);</code></p></div>
+    <div class="practice"><div class="p-icon">&#9889;</div><h4>Gunakan .select() spesifik</h4><p>Pilih kolom yang perlu saja: <code>.select('id, title')</code></p></div>
+    <div class="practice"><div class="p-icon">&#128737;</div><h4>Validasi input di client + server</h4><p>Pakai constraint DB (NOT NULL, CHECK) untuk safety</p></div>
+    <div class="practice"><div class="p-icon">&#128221;</div><h4>Handle error dengan baik</h4><p>Try-catch <code>PostgrestException</code> dan <code>AuthException</code></p></div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 25: STUDI KASUS ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">25</span><h2>Studi Kasus: Aplikasi Catatan</h2></div>
   <div class="case-study">
     <h3>Skenario</h3>
     <p>Buat aplikasi notes mobile dengan fitur: register, login, CRUD catatan, gambar attachment, sinkronisasi realtime antar device.</p>
     <h3>Database Schema</h3>
-    <pre><code class="lang-sql">-- Tabel notes
-create table notes (
+    <pre><code class="lang-sql">create table notes (
   id          uuid primary key default uuid_generate_v4(),
   user_id     uuid references auth.users(id),
   title       text not null,
   content     text,
   image_url   text,
   is_pinned   boolean default false,
-  created_at  timestamptz default now(),
-  updated_at  timestamptz default now()
+  created_at  timestamptz default now()
 );
 
 create index notes_user_id_idx on notes(user_id);
-create index notes_created_at_idx on notes(created_at desc);
 alter table notes enable row level security;
-
 create policy "Own notes only" on notes for all
   using (auth.uid() = user_id);</code></pre>
     <h3>Flutter Architecture</h3>
     <ul>
-      <li><strong>main.dart</strong> — Initialize Supabase</li>
-      <li><strong>screens/auth_screen.dart</strong> — Login/Register</li>
-      <li><strong>screens/notes_list.dart</strong> — Realtime list pakai StreamBuilder</li>
-      <li><strong>screens/note_edit.dart</strong> — Form CRUD + image picker</li>
-      <li><strong>services/supabase_service.dart</strong> — Wrapper untuk semua call DB</li>
+      <li><strong>main.dart</strong> &mdash; Initialize Supabase</li>
+      <li><strong>screens/auth_screen.dart</strong> &mdash; Login/Register</li>
+      <li><strong>screens/notes_list.dart</strong> &mdash; Realtime list pakai StreamBuilder</li>
+      <li><strong>screens/note_edit.dart</strong> &mdash; Form CRUD + image picker</li>
+      <li><strong>services/supabase_service.dart</strong> &mdash; Wrapper untuk semua call DB</li>
     </ul>
   </div>
 </section>
 
-<!-- ====== SLIDE 19: KESIMPULAN ====== -->
-<section class="slide" data-slide="19">
-  <div class="slide-header"><span class="num">19</span><h2>Kesimpulan</h2></div>
+<!-- ====== SLIDE 26: KESIMPULAN ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">26</span><h2>Kesimpulan</h2></div>
   <ul class="conclusions">
-    <li><strong>Database</strong> adalah pondasi aplikasi modern — tempat data persisten dan terstruktur.</li>
+    <li><strong>Database</strong> adalah pondasi aplikasi modern &mdash; tempat data persisten dan terstruktur.</li>
+    <li><strong>Flutter</strong> mengakses database via SDK/API, tidak langsung &mdash; pisahkan ke layer service/repository.</li>
     <li><strong>Supabase</strong> menyediakan stack lengkap (DB + Auth + Storage + Realtime) tanpa perlu setup server sendiri.</li>
     <li><strong>PostgreSQL</strong> di balik Supabase memberi kekuatan SQL penuh + ekosistem matang.</li>
     <li><strong>RLS</strong> wajib aktif untuk keamanan data multi-user.</li>
-    <li><strong>Flutter SDK</strong> Supabase memudahkan CRUD, auth, realtime dengan API yang intuitif.</li>
-    <li>Pendekatan <strong>BaaS</strong> mempercepat development MVP — fokus ke fitur, bukan infrastruktur.</li>
+    <li><strong>Clean Architecture</strong> + state management yang tepat membuat aplikasi maintainable.</li>
+    <li>Pendekatan <strong>BaaS</strong> mempercepat development MVP &mdash; fokus ke fitur, bukan infrastruktur.</li>
   </ul>
-  <div class="info-box success">
-    <strong>🎯 Setelah pertemuan ini, mahasiswa dapat:</strong> membangun aplikasi Flutter dengan database cloud, mengimplementasi authentication, dan menerapkan realtime data sync.
-  </div>
 </section>
 
-<!-- ====== SLIDE 20: TUGAS ====== -->
-<section class="slide" data-slide="20">
-  <div class="slide-header"><span class="num">20</span><h2>Tugas Praktik</h2></div>
+<!-- ====== SLIDE 27: TUGAS ====== -->
+<section class="slide">
+  <div class="slide-header"><span class="num">27</span><h2>Tugas Praktik</h2></div>
   <div class="task-card">
-    <h3>📝 Tugas: Aplikasi To-Do List Cloud</h3>
+    <h3>&#128221; Tugas: Aplikasi To-Do List Cloud</h3>
     <p><strong>Deadline:</strong> 1 minggu dari sekarang</p>
     <h4>Spesifikasi Fungsional</h4>
     <ol>
-      <li>Register & login dengan email-password</li>
+      <li>Register &amp; login dengan email-password</li>
       <li>User bisa tambah, edit, hapus, mark-complete todo</li>
       <li>Tiap user hanya lihat todo miliknya (RLS)</li>
       <li>List todo update realtime saat ada perubahan</li>
@@ -500,19 +896,20 @@ create policy "Own notes only" on notes for all
     <h4>Bonus (+nilai)</h4>
     <ul>
       <li>Filter berdasarkan status (all/active/completed)</li>
-      <li>Sort berdasarkan tanggal</li>
+      <li>Sort berdasarkan tanggal/priority</li>
       <li>Upload avatar profile</li>
+      <li>Pakai state management Provider/Riverpod</li>
     </ul>
     <h4>Submit</h4>
     <p>Push ke GitHub (<em>repo private, invite dosen</em>) + screenshot demo. Kirim link via SIAKAD.</p>
   </div>
 </section>
 
-<!-- ====== SLIDE 21: TERIMA KASIH ====== -->
-<section class="slide cover" data-slide="21">
+<!-- ====== SLIDE 28: TERIMA KASIH ====== -->
+<section class="slide cover">
   <div class="cover-content">
     <h1>Terima Kasih<br><span class="accent">Sampai Jumpa!</span></h1>
-    <p class="subtitle">Pertanyaan? Diskusi? Mari bahas bersama 💬</p>
+    <p class="subtitle">Pertanyaan? Diskusi? Mari bahas bersama &#128172;</p>
     <div class="cover-meta">
       <div><strong>Email</strong><span>triyono@udb.ac.id</span></div>
       <div><strong>Materi</strong><span>Akan diupload ke SIAKAD</span></div>
@@ -525,10 +922,10 @@ create policy "Own notes only" on notes for all
 
 <!-- Navigation Controls -->
 <div id="controls">
-  <button id="prev" aria-label="Previous">‹</button>
-  <span id="counter">1 / 21</span>
-  <button id="next" aria-label="Next">›</button>
-  <button id="fullscreen" aria-label="Fullscreen">⛶</button>
+  <button id="prev" aria-label="Previous">&lsaquo;</button>
+  <span id="counter">1 / 28</span>
+  <button id="next" aria-label="Next">&rsaquo;</button>
+  <button id="fullscreen" aria-label="Fullscreen">&#9116;</button>
 </div>
 
 <script src="script.js"></script>
