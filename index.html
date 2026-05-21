@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flutter + Supabase: Koneksi Database</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="presentation">
+
+<!-- ====== SLIDE 1: COVER ====== -->
+<section class="slide cover active" data-slide="1">
+  <div class="cover-content">
+    <div class="badge">Pertemuan • Database Mobile</div>
+    <h1>Koneksi Database<br><span class="accent">Flutter ↔ Supabase</span></h1>
+    <p class="subtitle">Membangun Aplikasi Mobile dengan Backend-as-a-Service yang Modern</p>
+    <div class="cover-meta">
+      <div><strong>Mata Kuliah</strong><span>Pemrograman Mobile</span></div>
+      <div><strong>Dosen</strong><span>Triyono, M.Kom</span></div>
+      <div><strong>Durasi</strong><span>±60 menit</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 2: AGENDA ====== -->
+<section class="slide" data-slide="2">
+  <div class="slide-header"><span class="num">02</span><h2>Agenda Hari Ini</h2></div>
+  <div class="agenda-grid">
+    <div class="agenda-item"><span class="ag-num">1</span><h3>Konsep Database</h3><p>Apa itu database, jenis, dan relasi dengan aplikasi</p></div>
+    <div class="agenda-item"><span class="ag-num">2</span><h3>Mengenal Supabase</h3><p>Backend-as-a-Service modern, alternatif Firebase</p></div>
+    <div class="agenda-item"><span class="ag-num">3</span><h3>Setup Project</h3><p>Buat project Supabase + setup Flutter</p></div>
+    <div class="agenda-item"><span class="ag-num">4</span><h3>CRUD Operations</h3><p>Create, Read, Update, Delete via Flutter</p></div>
+    <div class="agenda-item"><span class="ag-num">5</span><h3>Authentication</h3><p>Login, register, session management</p></div>
+    <div class="agenda-item"><span class="ag-num">6</span><h3>Realtime & Storage</h3><p>Realtime subscriptions + upload file</p></div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 3: APA ITU DATABASE ====== -->
+<section class="slide" data-slide="3">
+  <div class="slide-header"><span class="num">03</span><h2>Apa Itu Database?</h2></div>
+  <div class="two-col">
+    <div>
+      <p class="lead">Database adalah <strong>kumpulan data terstruktur</strong> yang disimpan secara elektronik dalam sistem komputer, dikelola oleh DBMS (Database Management System).</p>
+      <ul class="check-list">
+        <li><strong>Persisten</strong> — data tetap ada meski aplikasi ditutup</li>
+        <li><strong>Terstruktur</strong> — disimpan dalam tabel/dokumen yang konsisten</li>
+        <li><strong>Multi-user</strong> — banyak user bisa akses bersamaan</li>
+        <li><strong>Reliable</strong> — backup, transaksi, integritas data</li>
+      </ul>
+    </div>
+    <div class="illustration">
+      <div class="db-visual">
+        <div class="db-cylinder"></div>
+        <div class="db-arrow">⟷</div>
+        <div class="db-app">📱<span>Aplikasi</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 4: JENIS DATABASE ====== -->
+<section class="slide" data-slide="4">
+  <div class="slide-header"><span class="num">04</span><h2>Jenis-Jenis Database</h2></div>
+  <div class="comparison-grid">
+    <div class="comp-card relational">
+      <h3>SQL / Relational</h3>
+      <p class="examples">PostgreSQL · MySQL · SQLite</p>
+      <ul>
+        <li>Data dalam tabel (rows & columns)</li>
+        <li>Skema kaku, terdefinisi</li>
+        <li>Query pakai SQL</li>
+        <li>ACID compliant</li>
+        <li>Cocok untuk: data transaksional, relasi kompleks</li>
+      </ul>
+    </div>
+    <div class="comp-card nosql">
+      <h3>NoSQL / Non-Relational</h3>
+      <p class="examples">MongoDB · Firestore · Redis</p>
+      <ul>
+        <li>Data dalam dokumen/key-value/graph</li>
+        <li>Skema fleksibel</li>
+        <li>Query via API/method</li>
+        <li>Eventual consistency</li>
+        <li>Cocok untuk: data tidak terstruktur, scale horizontal</li>
+      </ul>
+    </div>
+  </div>
+  <div class="info-box">
+    <strong>💡 Supabase pakai PostgreSQL</strong> — database relational paling populer dengan fitur lengkap (JSON, full-text search, geospatial).
+  </div>
+</section>
+
+<!-- ====== SLIDE 5: ARSITEKTUR DATABASE APLIKASI MOBILE ====== -->
+<section class="slide" data-slide="5">
+  <div class="slide-header"><span class="num">05</span><h2>Arsitektur Database di Aplikasi Mobile</h2></div>
+  <div class="arch-diagram">
+    <div class="arch-layer">
+      <div class="layer-label">CLIENT (Flutter)</div>
+      <div class="layer-content">📱 UI · State · Local Cache</div>
+    </div>
+    <div class="arch-arrow">⬇ HTTPS / WebSocket</div>
+    <div class="arch-layer api">
+      <div class="layer-label">BACKEND / API</div>
+      <div class="layer-content">REST API · GraphQL · Auth · Storage</div>
+    </div>
+    <div class="arch-arrow">⬇ SQL Query</div>
+    <div class="arch-layer db">
+      <div class="layer-label">DATABASE</div>
+      <div class="layer-content">🗄️ PostgreSQL (Supabase)</div>
+    </div>
+  </div>
+  <p class="caption">Flutter <em>tidak akses database langsung</em> — semua lewat API/SDK Supabase yang menjamin keamanan & validasi.</p>
+</section>
+
+<!-- ====== SLIDE 6: KENALAN SUPABASE ====== -->
+<section class="slide" data-slide="6">
+  <div class="slide-header"><span class="num">06</span><h2>Mengenal Supabase</h2></div>
+  <div class="two-col">
+    <div>
+      <p class="lead"><strong>Supabase</strong> adalah open-source <em>Backend-as-a-Service</em> yang menyediakan database, auth, storage, dan realtime — semua dalam satu platform.</p>
+      <p>Tagline mereka: <em>"The open source Firebase alternative"</em></p>
+      <h4>Fitur Utama:</h4>
+      <ul class="check-list">
+        <li><strong>PostgreSQL Database</strong> full-fledged</li>
+        <li><strong>Auth</strong> (email, OAuth, magic link)</li>
+        <li><strong>Storage</strong> untuk file/gambar</li>
+        <li><strong>Realtime</strong> via WebSocket</li>
+        <li><strong>Edge Functions</strong> (serverless)</li>
+        <li><strong>Auto-generated REST API</strong> dari skema</li>
+      </ul>
+    </div>
+    <div class="supabase-stats">
+      <div class="stat-card"><div class="stat-num">500MB</div><div class="stat-lbl">Free DB Storage</div></div>
+      <div class="stat-card"><div class="stat-num">1GB</div><div class="stat-lbl">Free File Storage</div></div>
+      <div class="stat-card"><div class="stat-num">50K</div><div class="stat-lbl">Monthly Active Users</div></div>
+      <div class="stat-card"><div class="stat-num">Open</div><div class="stat-lbl">Source MIT</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 7: SUPABASE VS FIREBASE ====== -->
+<section class="slide" data-slide="7">
+  <div class="slide-header"><span class="num">07</span><h2>Supabase vs Firebase</h2></div>
+  <table class="compare-table">
+    <thead>
+      <tr><th>Aspek</th><th>Supabase</th><th>Firebase</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Database</td><td>PostgreSQL (Relational)</td><td>Firestore (NoSQL)</td></tr>
+      <tr><td>Query</td><td>SQL + REST + GraphQL</td><td>Method-based</td></tr>
+      <tr><td>Open Source</td><td>✅ Ya (MIT)</td><td>❌ Tidak</td></tr>
+      <tr><td>Self-Hosted</td><td>✅ Bisa</td><td>❌ Tidak bisa</td></tr>
+      <tr><td>Vendor Lock-in</td><td>Rendah (standar SQL)</td><td>Tinggi</td></tr>
+      <tr><td>Realtime</td><td>✅ WebSocket native</td><td>✅ Native</td></tr>
+      <tr><td>Pricing</td><td>$25/mo Pro</td><td>Pay as you go</td></tr>
+      <tr><td>Maturity</td><td>Newer (2020)</td><td>Mature (2011)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== SLIDE 8: PROSES SETUP SUPABASE ====== -->
+<section class="slide" data-slide="8">
+  <div class="slide-header"><span class="num">08</span><h2>Setup Project Supabase</h2></div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div><h4>Buka supabase.com</h4><p>Sign up dengan GitHub atau email. Free tier sudah cukup untuk belajar.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div><h4>Create New Project</h4><p>Pilih nama project, password DB, dan region (pilih Singapore untuk Indonesia).</p></div></div>
+    <div class="step"><div class="step-num">3</div><div><h4>Tunggu Provisioning</h4><p>Sekitar 1-2 menit. Supabase akan siapkan PostgreSQL + API + Auth.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div><h4>Catat Credentials</h4><p>Di <em>Settings → API</em>: <code>Project URL</code> dan <code>anon key</code> akan dipakai di Flutter.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div><h4>Buat Tabel</h4><p>Pakai <em>Table Editor</em> atau SQL Editor untuk define skema.</p></div></div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 9: BUAT TABEL ====== -->
+<section class="slide" data-slide="9">
+  <div class="slide-header"><span class="num">09</span><h2>Membuat Tabel di Supabase</h2></div>
+  <p>Contoh: tabel <code>todos</code> untuk aplikasi To-Do List</p>
+  <pre><code class="lang-sql">create table todos (
+  id          uuid default uuid_generate_v4() primary key,
+  user_id     uuid references auth.users(id),
+  title       text not null,
+  completed   boolean default false,
+  created_at  timestamptz default now()
+);
+
+-- Enable Row Level Security
+alter table todos enable row level security;
+
+-- Policy: user hanya bisa akses todo miliknya sendiri
+create policy "Users can manage their own todos"
+  on todos for all
+  using (auth.uid() = user_id);</code></pre>
+  <div class="info-box">
+    <strong>🔒 Row Level Security (RLS)</strong> — fitur PostgreSQL untuk membatasi akses per row berdasarkan user. <em>Wajib enabled</em> di Supabase.
+  </div>
+</section>
+
+<!-- ====== SLIDE 10: SETUP FLUTTER ====== -->
+<section class="slide" data-slide="10">
+  <div class="slide-header"><span class="num">10</span><h2>Setup Flutter Project</h2></div>
+  <p><strong>Step 1:</strong> Tambahkan dependency di <code>pubspec.yaml</code></p>
+  <pre><code class="lang-yaml">dependencies:
+  flutter:
+    sdk: flutter
+  supabase_flutter: ^2.5.0</code></pre>
+  <p><strong>Step 2:</strong> Install package</p>
+  <pre><code class="lang-bash">flutter pub get</code></pre>
+  <p><strong>Step 3:</strong> Initialize di <code>main.dart</code></p>
+  <pre><code class="lang-dart">import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+Future&lt;void&gt; main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://xxxxx.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIs...',
+  );
+
+  runApp(const MyApp());
+}
+
+final supabase = Supabase.instance.client;</code></pre>
+</section>
+
+<!-- ====== SLIDE 11: CREATE (INSERT) ====== -->
+<section class="slide" data-slide="11">
+  <div class="slide-header"><span class="num">11</span><h2>CRUD: Create (Insert Data)</h2></div>
+  <p>Menambahkan data baru ke tabel <code>todos</code>:</p>
+  <pre><code class="lang-dart">Future&lt;void&gt; addTodo(String title) async {
+  try {
+    await supabase.from('todos').insert({
+      'title': title,
+      'completed': false,
+      'user_id': supabase.auth.currentUser!.id,
+    });
+    print('Todo berhasil ditambahkan!');
+  } on PostgrestException catch (e) {
+    print('Error: ${e.message}');
+  }
+}
+
+// Pemakaian:
+ElevatedButton(
+  onPressed: () =&gt; addTodo('Belajar Flutter'),
+  child: Text('Add Todo'),
+);</code></pre>
+  <div class="info-box small">
+    <strong>Insert multiple:</strong> kirim List of Map → <code>.insert([{...}, {...}])</code>
+  </div>
+</section>
+
+<!-- ====== SLIDE 12: READ (SELECT) ====== -->
+<section class="slide" data-slide="12">
+  <div class="slide-header"><span class="num">12</span><h2>CRUD: Read (Select Data)</h2></div>
+  <pre><code class="lang-dart">// Ambil semua todos
+Future&lt;List&lt;Map&lt;String, dynamic&gt;&gt;&gt; getTodos() async {
+  final data = await supabase
+      .from('todos')
+      .select()
+      .order('created_at', ascending: false);
+  return data;
+}
+
+// Dengan filter
+final completed = await supabase
+    .from('todos')
+    .select()
+    .eq('completed', true)
+    .limit(10);
+
+// Pakai di Widget (FutureBuilder)
+FutureBuilder(
+  future: getTodos(),
+  builder: (ctx, snapshot) {
+    if (!snapshot.hasData) return CircularProgressIndicator();
+    final todos = snapshot.data!;
+    return ListView.builder(
+      itemCount: todos.length,
+      itemBuilder: (_, i) =&gt; ListTile(title: Text(todos[i]['title'])),
+    );
+  },
+);</code></pre>
+</section>
+
+<!-- ====== SLIDE 13: UPDATE & DELETE ====== -->
+<section class="slide" data-slide="13">
+  <div class="slide-header"><span class="num">13</span><h2>CRUD: Update & Delete</h2></div>
+  <div class="two-col-equal">
+    <div>
+      <h4>Update</h4>
+      <pre><code class="lang-dart">Future&lt;void&gt; toggleTodo(
+  String id, bool current) async {
+  await supabase
+    .from('todos')
+    .update({'completed': !current})
+    .eq('id', id);
+}</code></pre>
+    </div>
+    <div>
+      <h4>Delete</h4>
+      <pre><code class="lang-dart">Future&lt;void&gt; deleteTodo(
+  String id) async {
+  await supabase
+    .from('todos')
+    .delete()
+    .eq('id', id);
+}</code></pre>
+    </div>
+  </div>
+  <h4>Filter Operators</h4>
+  <table class="compare-table small">
+    <tr><th><code>.eq()</code></th><td>equal (=)</td></tr>
+    <tr><th><code>.neq()</code></th><td>not equal (!=)</td></tr>
+    <tr><th><code>.gt()</code> / <code>.lt()</code></th><td>greater / less than</td></tr>
+    <tr><th><code>.like()</code></th><td>pattern match (%text%)</td></tr>
+    <tr><th><code>.in_()</code></th><td>value in list</td></tr>
+    <tr><th><code>.is_()</code></th><td>is null / is true</td></tr>
+  </table>
+</section>
+
+<!-- ====== SLIDE 14: AUTH ====== -->
+<section class="slide" data-slide="14">
+  <div class="slide-header"><span class="num">14</span><h2>Authentication: Sign Up & Sign In</h2></div>
+  <pre><code class="lang-dart">// REGISTER
+Future&lt;void&gt; signUp(String email, String password) async {
+  final response = await supabase.auth.signUp(
+    email: email,
+    password: password,
+  );
+  if (response.user != null) print('Registered!');
+}
+
+// LOGIN
+Future&lt;void&gt; signIn(String email, String password) async {
+  final response = await supabase.auth.signInWithPassword(
+    email: email,
+    password: password,
+  );
+  if (response.session != null) print('Logged in!');
+}
+
+// LOGOUT
+Future&lt;void&gt; signOut() async {
+  await supabase.auth.signOut();
+}
+
+// LISTEN AUTH CHANGE
+supabase.auth.onAuthStateChange.listen((data) {
+  final session = data.session;
+  if (session != null) print('User: ${session.user.email}');
+});</code></pre>
+</section>
+
+<!-- ====== SLIDE 15: REALTIME ====== -->
+<section class="slide" data-slide="15">
+  <div class="slide-header"><span class="num">15</span><h2>Realtime Subscriptions</h2></div>
+  <p>Update UI otomatis saat data berubah di database (mirip chat):</p>
+  <pre><code class="lang-dart">// Stream realtime
+final stream = supabase
+    .from('todos')
+    .stream(primaryKey: ['id'])
+    .order('created_at');
+
+// Pakai di StreamBuilder
+StreamBuilder(
+  stream: stream,
+  builder: (ctx, snapshot) {
+    if (!snapshot.hasData) return CircularProgressIndicator();
+    final todos = snapshot.data!;
+    return ListView.builder(
+      itemCount: todos.length,
+      itemBuilder: (_, i) =&gt; CheckboxListTile(
+        title: Text(todos[i]['title']),
+        value: todos[i]['completed'],
+        onChanged: (v) =&gt; toggleTodo(todos[i]['id'], v!),
+      ),
+    );
+  },
+);</code></pre>
+  <div class="info-box">
+    <strong>⚡ Realtime aktif</strong> di Supabase Dashboard → Database → Replication → toggle table.
+  </div>
+</section>
+
+<!-- ====== SLIDE 16: STORAGE ====== -->
+<section class="slide" data-slide="16">
+  <div class="slide-header"><span class="num">16</span><h2>Upload File ke Storage</h2></div>
+  <pre><code class="lang-dart">import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
+// 1. Pilih gambar dari galeri
+final picker = ImagePicker();
+final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+if (image == null) return;
+
+final file = File(image.path);
+final fileName = 'avatar_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+// 2. Upload ke bucket 'avatars'
+await supabase.storage
+    .from('avatars')
+    .upload(fileName, file);
+
+// 3. Get public URL
+final imageUrl = supabase.storage
+    .from('avatars')
+    .getPublicUrl(fileName);
+
+print('Image uploaded: $imageUrl');
+
+// 4. Save URL ke tabel
+await supabase.from('profiles').update({
+  'avatar_url': imageUrl,
+}).eq('id', supabase.auth.currentUser!.id);</code></pre>
+</section>
+
+<!-- ====== SLIDE 17: BEST PRACTICES ====== -->
+<section class="slide" data-slide="17">
+  <div class="slide-header"><span class="num">17</span><h2>Best Practices</h2></div>
+  <div class="practices-grid">
+    <div class="practice"><div class="p-icon">🔒</div><h4>Aktifkan RLS</h4><p>Selalu enable Row Level Security supaya data tidak bisa diakses sembarangan</p></div>
+    <div class="practice"><div class="p-icon">🔑</div><h4>Pakai anon key, bukan service key</h4><p>Service key punya akses penuh — JANGAN expose di client app</p></div>
+    <div class="practice"><div class="p-icon">📊</div><h4>Index pada kolom yang sering di-query</h4><p><code>create index on todos(user_id);</code></p></div>
+    <div class="practice"><div class="p-icon">⚡</div><h4>Gunakan .select() spesifik</h4><p>Pilih kolom yang perlu saja: <code>.select('id, title')</code></p></div>
+    <div class="practice"><div class="p-icon">🛡️</div><h4>Validasi input di client + server</h4><p>Pakai constraint DB (NOT NULL, CHECK) untuk safety</p></div>
+    <div class="practice"><div class="p-icon">📝</div><h4>Handle error dengan baik</h4><p>Try-catch <code>PostgrestException</code> dan <code>AuthException</code></p></div>
+  </div>
+</section>
+
+<!-- ====== SLIDE 18: STUDI KASUS ====== -->
+<section class="slide" data-slide="18">
+  <div class="slide-header"><span class="num">18</span><h2>Studi Kasus: Aplikasi Catatan</h2></div>
+  <div class="case-study">
+    <h3>Skenario</h3>
+    <p>Buat aplikasi notes mobile dengan fitur: register, login, CRUD catatan, gambar attachment, sinkronisasi realtime antar device.</p>
+    <h3>Database Schema</h3>
+    <pre><code class="lang-sql">-- Tabel notes
+create table notes (
+  id          uuid primary key default uuid_generate_v4(),
+  user_id     uuid references auth.users(id),
+  title       text not null,
+  content     text,
+  image_url   text,
+  is_pinned   boolean default false,
+  created_at  timestamptz default now(),
+  updated_at  timestamptz default now()
+);
+
+create index notes_user_id_idx on notes(user_id);
+create index notes_created_at_idx on notes(created_at desc);
+alter table notes enable row level security;
+
+create policy "Own notes only" on notes for all
+  using (auth.uid() = user_id);</code></pre>
+    <h3>Flutter Architecture</h3>
+    <ul>
+      <li><strong>main.dart</strong> — Initialize Supabase</li>
+      <li><strong>screens/auth_screen.dart</strong> — Login/Register</li>
+      <li><strong>screens/notes_list.dart</strong> — Realtime list pakai StreamBuilder</li>
+      <li><strong>screens/note_edit.dart</strong> — Form CRUD + image picker</li>
+      <li><strong>services/supabase_service.dart</strong> — Wrapper untuk semua call DB</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ====== SLIDE 19: KESIMPULAN ====== -->
+<section class="slide" data-slide="19">
+  <div class="slide-header"><span class="num">19</span><h2>Kesimpulan</h2></div>
+  <ul class="conclusions">
+    <li><strong>Database</strong> adalah pondasi aplikasi modern — tempat data persisten dan terstruktur.</li>
+    <li><strong>Supabase</strong> menyediakan stack lengkap (DB + Auth + Storage + Realtime) tanpa perlu setup server sendiri.</li>
+    <li><strong>PostgreSQL</strong> di balik Supabase memberi kekuatan SQL penuh + ekosistem matang.</li>
+    <li><strong>RLS</strong> wajib aktif untuk keamanan data multi-user.</li>
+    <li><strong>Flutter SDK</strong> Supabase memudahkan CRUD, auth, realtime dengan API yang intuitif.</li>
+    <li>Pendekatan <strong>BaaS</strong> mempercepat development MVP — fokus ke fitur, bukan infrastruktur.</li>
+  </ul>
+  <div class="info-box success">
+    <strong>🎯 Setelah pertemuan ini, mahasiswa dapat:</strong> membangun aplikasi Flutter dengan database cloud, mengimplementasi authentication, dan menerapkan realtime data sync.
+  </div>
+</section>
+
+<!-- ====== SLIDE 20: TUGAS ====== -->
+<section class="slide" data-slide="20">
+  <div class="slide-header"><span class="num">20</span><h2>Tugas Praktik</h2></div>
+  <div class="task-card">
+    <h3>📝 Tugas: Aplikasi To-Do List Cloud</h3>
+    <p><strong>Deadline:</strong> 1 minggu dari sekarang</p>
+    <h4>Spesifikasi Fungsional</h4>
+    <ol>
+      <li>Register & login dengan email-password</li>
+      <li>User bisa tambah, edit, hapus, mark-complete todo</li>
+      <li>Tiap user hanya lihat todo miliknya (RLS)</li>
+      <li>List todo update realtime saat ada perubahan</li>
+      <li>Tampilkan jumlah todo aktif di AppBar</li>
+    </ol>
+    <h4>Bonus (+nilai)</h4>
+    <ul>
+      <li>Filter berdasarkan status (all/active/completed)</li>
+      <li>Sort berdasarkan tanggal</li>
+      <li>Upload avatar profile</li>
+    </ul>
+    <h4>Submit</h4>
+    <p>Push ke GitHub (<em>repo private, invite dosen</em>) + screenshot demo. Kirim link via SIAKAD.</p>
+  </div>
+</section>
+
+<!-- ====== SLIDE 21: TERIMA KASIH ====== -->
+<section class="slide cover" data-slide="21">
+  <div class="cover-content">
+    <h1>Terima Kasih<br><span class="accent">Sampai Jumpa!</span></h1>
+    <p class="subtitle">Pertanyaan? Diskusi? Mari bahas bersama 💬</p>
+    <div class="cover-meta">
+      <div><strong>Email</strong><span>triyono@udb.ac.id</span></div>
+      <div><strong>Materi</strong><span>Akan diupload ke SIAKAD</span></div>
+      <div><strong>Referensi</strong><span>supabase.com/docs</span></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- Navigation Controls -->
+<div id="controls">
+  <button id="prev" aria-label="Previous">‹</button>
+  <span id="counter">1 / 21</span>
+  <button id="next" aria-label="Next">›</button>
+  <button id="fullscreen" aria-label="Fullscreen">⛶</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
